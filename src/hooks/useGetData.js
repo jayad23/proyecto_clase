@@ -3,8 +3,9 @@ import axios from "axios";
 
 export const useGetData = (endpoint) => {
   const [values, setValues] = useState(null);
-
+  console.log(endpoint);
   useEffect(() => {
+    console.log(endpoint);
     axios
       .get(endpoint)
       .then(({ data }) => {
@@ -13,7 +14,7 @@ export const useGetData = (endpoint) => {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [endpoint]);
 
   return {
     values,

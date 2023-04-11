@@ -1,22 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { endpoint } from "./Home";
-import { useGetData } from "../hooks/UseGetData";
+import { useFetch } from "../hooks/useFetch";
 import { Button } from "@mui/material";
 
 const UserSelected = () => {
     const { login } = useParams();
-    const { values } = useGetData(`${endpoint}/${login}`)
     const navigate = useNavigate();
+    const [data] = useFetch(`${endpoint}/${login}`);
 
     return (
         <div>
             <h1>UserSelected</h1>
             <div>
-                <p>{values?.login}</p>
-                <p>{values?.followers}</p>
-                <p>{values?.following}</p>
-                <img src={values?.avatar_url} />
+                <p>{data?.login}</p>
+                <p>{data?.followers}</p>
+                <p>{data?.following}</p>
+                <img src={data?.avatar_url} />
                 <Button sx={{ mb: 3.5 }} onClick={() => navigate(-1)}>Volver</Button>
             </div>
         </div>
