@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from "react-router-dom";
 import { NewContext } from '../context/Context';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, CardMedia, TextField } from '@mui/material';
 
 const Login = () => {
     const [values, setValues] = useState({ email: "", password: "" });
@@ -17,33 +17,58 @@ const Login = () => {
     }
 
     return (
-        <Box
-            component="form"
-            sx={{ display: "flex", flexDirection: "column", gap: "20px", width: "20vw" }}
-            onSubmit={handleSubmit}
-        >
-            <TextField
-                name='email'
-                size='small'
-                type="text"
-                label="E-mail"
-                placeholder='Ingrese su e-mail'
-                value={values.email}
-                onChange={(e) => setValues({ ...values, email: e.target.value })}
-            />
-            <TextField
-                name='password'
-                size='small'
-                type="password"
-                label="password"
-                placeholder='Ingrese su contraseña'
-                value={values.password}
-                onChange={(e) => setValues({ ...values, password: e.target.value })}
-            />
-            <Button type='submit' size="small" variant="contained">
-                Ingresar
-            </Button>
+        <Box component="div"
+            sx={{
+                width: "20vw",
+                border: "1px solid grey",
+                p: 2,
+                borderRadius: "5px",
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)"
+            }}
 
+        >
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <CardMedia
+                    component="img"
+                    image="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                    sx={{ width: "100px" }}
+                />
+            </Box>
+            <Box
+                component="form"
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "20px",
+                }}
+                onSubmit={handleSubmit}
+            >
+                <TextField
+                    name='email'
+                    size='small'
+                    type="text"
+                    label="E-mail"
+                    placeholder='Ingrese su e-mail'
+                    value={values.email}
+                    onChange={(e) => setValues({ ...values, email: e.target.value })}
+                />
+                <TextField
+                    name='password'
+                    size='small'
+                    type="password"
+                    label="password"
+                    placeholder='Ingrese su contraseña'
+                    value={values.password}
+                    onChange={(e) => setValues({ ...values, password: e.target.value })}
+                />
+                <Button type='submit' size="small" variant="contained">
+                    Ingresar
+                </Button>
+
+            </Box>
         </Box>
     )
 }
