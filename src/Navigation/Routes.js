@@ -5,6 +5,7 @@ import PerfilDetail from "../components/Producto/PerfilDetail";
 import Home from "../Screen/Home";
 import UserSelected from "../Screen/UserSelected";
 import Favorites from "../Screen/Favorites";
+import InStore from "../Screen/InStore";
 
 export const routes = [
   {
@@ -26,6 +27,11 @@ export const routes = [
     id: 4,
     path: "/favoritos",
     Component: Favorites,
+  },
+  {
+    id: 5,
+    path: "/favoritos-in-store",
+    Component: InStore,
   },
 ];
 

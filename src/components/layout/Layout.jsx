@@ -23,6 +23,7 @@ const Layout = () => {
       <Box component="header" style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid grey" }}>
         <ul style={{ display: "flex", gap: "20px" }}>
           <NavLink to="/favoritos">Favoritos</NavLink>
+          <NavLink to="/favoritos-in-store">En Store</NavLink>
           <NavLink to="/home">Home</NavLink>
         </ul>
         <Box component="form" onSubmit={handleSearch}>
