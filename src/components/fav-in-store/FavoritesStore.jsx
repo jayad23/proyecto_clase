@@ -1,11 +1,14 @@
 import React from "react";
-import { Box, Button, CardMedia, IconButton, Typography } from "@mui/material";
+import { Box, Button, CardMedia, Divider, IconButton, Typography } from "@mui/material";
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import MarkUnreadChatAltRoundedIcon from '@mui/icons-material/MarkUnreadChatAltRounded';
 import SendIcon from '@mui/icons-material/Send';
 import EditIcon from '@mui/icons-material/Edit';
 import { useHandleComments } from "../../hooks/useHandleComents";
+import ThumbUpOffAltOutlinedIcon from '@mui/icons-material/ThumbUpOffAltOutlined';
+import ThumbUpOffAltRoundedIcon from '@mui/icons-material/ThumbUpOffAltRounded';
+import SaveAsRoundedIcon from '@mui/icons-material/SaveAsRounded';
 
 const defaultValues = {
   showCommentBubble: false,
@@ -22,6 +25,8 @@ const FavoritesStore = ({ user }) => {
     handleSubmitComment,
     handleEdit,
     handleSubmitEdittedComment,
+    handleLikeComment,
+    inLoggin,
   } = useHandleComments(user?.values ? user.values : defaultValues);
 
   return (
@@ -60,8 +65,7 @@ const FavoritesStore = ({ user }) => {
         {
           comments.collection.length > 0 && comments.showCommentBubble && comments.collection.map((com) => (
             <Box component="div" key={com.id} sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
-              <Typography
-                variant="caption"
+              <Box
                 component="div"
                 sx={{
                   padding: "3px 5px",
@@ -73,12 +77,49 @@ const FavoritesStore = ({ user }) => {
                   background: com.bg
                 }}
               >
-                {com.value}
-              </Typography>
-              <Box>
-                <IconButton onClick={() => handleEdit(com.id, user)}>
-                  <EditIcon sx={{ fontSize: "15px" }} />
-                </IconButton>
+                <Typography
+                  variant="caption"
+                  component="div"
+                >
+                  {com.value}
+                </Typography>
+                <Divider />
+                <Typography variant="caption" component="div" sx={{ fontSize: "8px" }}>
+                  {com.createdAt} / {com.by}
+                </Typography>
+              </Box>
+              <Box
+                component="div"
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <Box>
+                  <IconButton disabled={inLoggin !== com.by} onClick={() => handleEdit(com.id, user)}>
+                    <EditIcon sx={{ fontSize: "12px" }} />
+                  </IconButton>
+                </Box>
+                <Box>
+                  <Box component="div" sx={{ padding: 0, position: "relative" }}>
+                    {com.liked > 0 && (
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          top: `${com.liked >= 100 ? "-6px" : "-2px"}`,
+                          right: `${com.liked >= 100 ? "-6px" : "-3px"}`,
+                          borderRadius: "100%",
+                          background: "red",
+                          padding: `${com.liked >= 100 ? "5px 2.5px" : "3px 5px"}`,
+                          fontSize: "9px",
+                          color: "white",
+                        }}
+                      >
+                        {com.liked}
+                      </Box>
+                    )}
+                    <IconButton disabled={com.likedBy.some(element => element === inLoggin)} onClick={() => handleLikeComment(com.id, user)} >
+                      {com.liked > 0 ? <ThumbUpOffAltRoundedIcon sx={{ fontSize: "12px" }} /> : <ThumbUpOffAltOutlinedIcon sx={{ fontSize: "12px" }} />}
+                    </IconButton>
+                  </Box>
+                </Box>
               </Box>
             </Box>
           ))
@@ -106,7 +147,7 @@ const FavoritesStore = ({ user }) => {
           type="button"
           onClick={() => edit.flag ? handleSubmitEdittedComment(edit.id, user) : handleSubmitComment(user)}
         >
-          {edit.flag ? "Save" : "Send"} <SendIcon sx={{ fontSize: "15px" }} />
+          {edit.flag ? <SaveAsRoundedIcon sx={{ fontSize: "15px" }} /> : <SendIcon sx={{ fontSize: "15px" }} />}
         </Button>
       </Box>
     </Box>
