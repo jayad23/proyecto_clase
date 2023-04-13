@@ -7,7 +7,7 @@ export const DesktopDrawer = () => {
   return (
     <Box component="ul" sx={{ display: { xs: "none", sm: "flex" }, gap: "20px" }}>
       <NavLink to="/favoritos">Favoritos</NavLink>
-      <NavLink to="/favoritos-in-store">En Store</NavLink>
+      <NavLink to="/favoritos-in-store">Favs en Firebase</NavLink>
       <NavLink to="/home">Home</NavLink>
     </Box>
   )
@@ -35,7 +35,7 @@ export const MobileDrawer = () => {
             }}>
             <Box component="ul" sx={{ display: "flex", flexDirection: "column", margin: 0, padding: 0, gap: "10px" }}>
               <NavLink to="/favoritos">Favoritos</NavLink>
-              <NavLink to="/favoritos-in-store">En Store</NavLink>
+              <NavLink to="/favoritos-in-store">Favs in FB</NavLink>
               <NavLink to="/home">Home</NavLink>
             </Box>
           </Box>
