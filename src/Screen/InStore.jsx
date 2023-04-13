@@ -16,9 +16,7 @@ const InStore = () => {
       setData(results);
     }
     fetchData()
-  }, [])
-
-  console.log(data);
+  }, []);
 
   return (
     <Box component="div"
@@ -28,7 +26,6 @@ const InStore = () => {
         alignItems: "start",
         flexWrap: "wrap",
         gap: "10px",
-        mt: 1
       }}>
       {
         data && data.map(user => (
