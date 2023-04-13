@@ -1,18 +1,35 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from "react-router-dom";
 import { NewContext } from '../context/Context';
-import { Box, Button, CardMedia, TextField } from '@mui/material';
+import { Box, Button, CardMedia, IconButton, TextField, Tooltip } from '@mui/material';
+import GoogleIcon from '@mui/icons-material/Google';
+import { onSignIn, onSingInGmail } from '../api/firebaseMethods';
 
 const Login = () => {
     const [values, setValues] = useState({ email: "", password: "" });
     const { dispatch } = useContext(NewContext);
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (values.email) {
-            dispatch({ type: "LOGGIN", payload: values.email });
+            try {
+                const result = await onSignIn(values);
+                dispatch({ type: "LOGGIN", payload: { email: values.email, token: result?.user?.accessToken } });
+                navigate("/home");
+            } catch (error) {
+                console.error("Kike Error", error)
+            }
+        }
+    }
+
+    const handleLoginInGmail = async () => {
+        try {
+            const result = await onSingInGmail();
+            dispatch({ type: "LOGGIN", payload: { email: result.user.email, token: result?.user?.accessToken } });
             navigate("/home");
+        } catch (error) {
+            console.error(error);
         }
     }
 
@@ -67,7 +84,13 @@ const Login = () => {
                 <Button type='submit' size="small" variant="contained">
                     Ingresar
                 </Button>
-
+                <Box>
+                    <Tooltip title="Ingresa con tu cuenta Gmail">
+                        <IconButton onClick={handleLoginInGmail}>
+                            <GoogleIcon />
+                        </IconButton>
+                    </Tooltip>
+                </Box>
             </Box>
         </Box>
     )

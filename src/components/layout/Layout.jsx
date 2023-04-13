@@ -1,9 +1,10 @@
 import React, { Fragment, useContext, useState } from 'react'
 import { NewContext } from '../../context/Context';
 import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material';
-import { Outlet, useNavigate } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded';
 import SearchIcon from '@mui/icons-material/Search';
+import "./style.css";
 
 const Layout = () => {
   const [userName, setUserName] = useState("");
@@ -21,8 +22,8 @@ const Layout = () => {
     <Fragment>
       <Box component="header" style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid grey" }}>
         <ul style={{ display: "flex", gap: "20px" }}>
-          <li onClick={() => navigate("/favoritos")} style={{ cursor: "pointer" }}>Favoritos</li>
-          <li onClick={() => navigate("/home")} style={{ cursor: "pointer" }}>Home</li>
+          <NavLink to="/favoritos">Favoritos</NavLink>
+          <NavLink to="/home">Home</NavLink>
         </ul>
         <Box component="form" onSubmit={handleSearch}>
           <TextField

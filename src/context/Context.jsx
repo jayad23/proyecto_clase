@@ -6,11 +6,11 @@ export const NewContext = createContext({});
 const handleDispatch = (state, { type, payload }) => {
     switch (type) {
         case "LOGGIN":
-            sessionStorage.setItem("token", JSON.stringify("ASDFGTRYU98765"));
+            sessionStorage.setItem("token", JSON.stringify(payload.token));
             return {
                 ...state,
                 isLogged: true,
-                user: payload
+                user: payload.email
             }
         case "LOGOUT":
             localStorage.clear();
