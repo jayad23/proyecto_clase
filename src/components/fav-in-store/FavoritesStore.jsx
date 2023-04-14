@@ -29,6 +29,9 @@ const FavoritesStore = ({ user }) => {
     inLoggin,
   } = useHandleComments(user?.values ? user.values : defaultValues);
 
+  const collectionOfLikes = comments.collection.map(el => el.liked);
+  const additionOfLikes = collectionOfLikes.reduce((a, b) => (a + b), 0);
+
   return (
     <Box component="div"
       sx={{
@@ -51,7 +54,7 @@ const FavoritesStore = ({ user }) => {
           justifyContent: "space-between"
         }}
       >
-        <Typography variant="body1">Likes: {user.followers}</Typography>
+        <Typography variant="body1">Likes: {user.followers + additionOfLikes}</Typography>
         <Box component="div">
           <IconButton disabled={!comments.collection.length > 0} onClick={handleShowCommentBubble}>
             {comments.collection.length > 0 ? <MarkUnreadChatAltRoundedIcon /> : <ChatBubbleOutlineIcon />}
@@ -90,7 +93,7 @@ const FavoritesStore = ({ user }) => {
               </Box>
               <Box
                 component="div"
-                sx={{ display: "flex", alignItems: "center" }}
+                sx={{ display: "flex", alignItems: "center", flexDirection: "column", paddingRight: "5px" }}
               >
                 <Box>
                   <IconButton disabled={inLoggin !== com.by} onClick={() => handleEdit(com.id, user)}>

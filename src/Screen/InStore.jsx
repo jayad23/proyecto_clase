@@ -22,7 +22,7 @@ const InStore = () => {
     <Box component="div"
       sx={{
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "space-around",
         alignItems: "start",
         flexWrap: "wrap",
         gap: "10px",
