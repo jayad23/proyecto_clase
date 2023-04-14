@@ -4,8 +4,9 @@ import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import { Outlet, useNavigate } from 'react-router-dom'
 import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded';
 import SearchIcon from '@mui/icons-material/Search';
-import "./style.css";
 import { DesktopDrawer, MobileDrawer } from './Drawer';
+import { onSignOut } from '../../api/firebaseMethods';
+import "./style.css";
 
 const Layout = () => {
   const [userName, setUserName] = useState("");
@@ -16,6 +17,15 @@ const Layout = () => {
     e.preventDefault();
     if (userName) {
       navigate(`/users/${userName}`);
+    }
+  };
+
+  const handleLogOut = async () => {
+    try {
+      await onSignOut();
+      dispatch({ type: "LOGOUT" })
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -40,7 +50,7 @@ const Layout = () => {
           <Typography variant="body2">{state.user}</Typography>
           <Box>
             <Tooltip title="Cerrar sesión">
-              <IconButton onClick={() => dispatch({ type: "LOGOUT" })}>
+              <IconButton onClick={() => handleLogOut()}>
                 <ExitToAppRoundedIcon size={30} />
               </IconButton>
             </Tooltip>

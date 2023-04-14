@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  signOut,
 } from "firebase/auth";
 
 import {
@@ -29,6 +30,10 @@ export const onSingInGmail = async () => {
   } catch (error) {
     return error;
   }
+};
+
+export const onSignOut = async () => {
+  return await signOut(auth);
 };
 
 const db = getFirestore(app);

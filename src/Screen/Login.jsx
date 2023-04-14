@@ -7,29 +7,37 @@ import { onSignIn, onSingInGmail } from '../api/firebaseMethods';
 
 const Login = () => {
     const [values, setValues] = useState({ email: "", password: "" });
+    const [isLoggin, setIsLoggin] = useState("Ingresar");
     const { dispatch } = useContext(NewContext);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
+        setIsLoggin("Consultando...")
         e.preventDefault();
         if (values.email) {
             try {
                 const result = await onSignIn(values);
                 dispatch({ type: "LOGGIN", payload: { email: values.email, token: result?.user?.accessToken } });
                 navigate("/home");
+                setIsLoggin("Ingresar");
             } catch (error) {
                 console.error("Kike Error", error)
+                setIsLoggin("Intentar nuevamente");
             }
         }
     }
 
     const handleLoginInGmail = async () => {
+        setIsLoggin("Consultando...")
         try {
             const result = await onSingInGmail();
+            console.log(result);
             dispatch({ type: "LOGGIN", payload: { email: result.user.email, token: result?.user?.accessToken } });
             navigate("/home");
+            setIsLoggin("Ingresar");
         } catch (error) {
             console.error(error);
+            setIsLoggin("Intentar nuevamente");
         }
     }
 
@@ -82,7 +90,7 @@ const Login = () => {
                     onChange={(e) => setValues({ ...values, password: e.target.value })}
                 />
                 <Button type='submit' size="small" variant="contained">
-                    Ingresar
+                    {isLoggin}
                 </Button>
                 <Box>
                     <Tooltip title="Ingresa con tu cuenta Gmail">
