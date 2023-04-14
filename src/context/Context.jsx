@@ -7,6 +7,7 @@ const handleDispatch = (state, { type, payload }) => {
     switch (type) {
         case "LOGGIN":
             sessionStorage.setItem("token", JSON.stringify(payload.token));
+            sessionStorage.setItem("user", JSON.stringify(payload.email))
             return {
                 ...state,
                 isLogged: true,
@@ -39,7 +40,7 @@ const handleDispatch = (state, { type, payload }) => {
 const NewContextProvider = ({ children }) => {
     const initialState = {
         isLogged: !!sessionStorage.getItem("token"),
-        user: null,
+        user: JSON.parse(sessionStorage.getItem("user")),
         data: JSON.parse(localStorage.getItem("favoritos")) ?? []
     };
     const [state, dispatch] = useReducer(handleDispatch, initialState);

@@ -4,45 +4,26 @@ import { endpoint } from "./Home";
 import { useFetch } from "../hooks/useFetch";
 import { Box, Button, CardMedia, IconButton, TextareaAutosize, Typography } from "@mui/material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import SendIcon from '@mui/icons-material/Send';
 import EditIcon from '@mui/icons-material/Edit';
-import { v4 } from "uuid";
-
-const colorCollection = {
-    0: "#FA9884",
-    1: "#C0DBEA",
-    2: "#FFA559",
-    3: "#F3E8FF"
-}
+import { addNewUser } from "../api/firebaseMethods";
+import { useHandleComments } from "../hooks/useHandleComents";
 
 const UserSelected = () => {
     const { login } = useParams();
     const [data] = useFetch(`${endpoint}/${login}`);
-    const [comments, setComments] = useState({ showCommentBubble: false, comment: "", collection: [] });
-    const [edit, setEdit] = useState({ flag: false, id: null });
+    const [isAddedIn, setIsAddedIn] = useState(false);
 
-    const handleShowCommentBubble = () => {
-        setComments({ ...comments, showCommentBubble: true });
-    };
-
-    const handleComment = (value) => {
-        setComments({ ...comments, comment: value });
-    };
-
-    const handleSubmitComment = () => {
-        setComments({ ...comments, collection: [{ id: v4(), bg: colorCollection[Math.floor(Math.random() * 4)], value: comments.comment }, ...comments.collection], comment: "" })
-    };
-
-    const handleEdit = (id) => {
-        setEdit({ flag: true, id });
-        const selected = comments.collection.find(com => com.id === id);
-        setComments({ ...comments, comment: selected.value })
-    };
-
-    const handleSubmitEdittedComment = (id) => {
-        const updatedCollection = comments.collection.map(com => com.id === id ? { ...com, value: comments.comment } : com);
-        setComments({ ...comments, collection: updatedCollection, comment: "" })
+    const handleAddInFavorites = (title, values) => {
+        try {
+            addNewUser(title, values);
+            setIsAddedIn(true);
+        } catch (error) {
+            console.log(error);
+            setIsAddedIn(false);
+        }
     };
 
     return (
@@ -75,71 +56,11 @@ const UserSelected = () => {
                         >
                             <Typography variant="body1">Likes: {data.followers}</Typography>
                             <Box component="div">
-                                <IconButton onClick={handleShowCommentBubble}>
-                                    <ChatBubbleOutlineIcon />
-                                </IconButton>
-                                <IconButton>
-                                    <FavoriteBorderIcon />
+                                <IconButton onClick={() => handleAddInFavorites(login, data)}>
+                                    {isAddedIn ? <FavoriteRoundedIcon /> : <FavoriteBorderIcon />}
                                 </IconButton>
                             </Box>
                         </Box>
-                        <Box sx={{ mb: 1, maxHeight: "200px", overflow: "scroll" }}>
-                            {
-                                comments.collection.length > 0 && comments.collection.map((com) => (
-                                    <Box component="div" key={com.id} sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                                        <Typography
-                                            variant="caption"
-                                            component="div"
-                                            sx={{
-                                                padding: "3px 5px",
-                                                border: `2px solid ${com.bg}`,
-                                                borderRadius: "5px",
-                                                width: "fit-content",
-                                                marginBottom: "2px",
-                                                color: "#0B2447",
-                                                background: com.bg
-                                            }}
-                                        >
-                                            {com.value}
-                                        </Typography>
-                                        <Box>
-                                            <IconButton onClick={() => handleEdit(com.id)}>
-                                                <EditIcon sx={{ fontSize: "15px" }} />
-                                            </IconButton>
-                                        </Box>
-                                    </Box>
-                                ))
-                            }
-                        </Box>
-                        {
-                            comments.showCommentBubble && (
-                                <Box component="div">
-                                    <textarea
-                                        name="comment"
-                                        rows="2"
-                                        cols="50"
-                                        style={{
-                                            padding: "5px",
-                                            outline: "none",
-                                            borderRadius: "7px",
-                                            width: "98%",
-                                            fontFamily: "Arial"
-                                        }}
-                                        value={comments.comment}
-                                        onChange={(e) => handleComment(e.target.value)}
-                                    />
-                                    <Button
-                                        variant="contained"
-                                        size="small"
-                                        sx={{ display: "flex", textAlign: "center", gap: "5px" }}
-                                        type="button"
-                                        onClick={() => edit.flag ? handleSubmitEdittedComment(edit.id) : handleSubmitComment()}
-                                    >
-                                        {edit.flag ? "Save" : "Send"} <SendIcon sx={{ fontSize: "15px" }} />
-                                    </Button>
-                                </Box>
-                            )
-                        }
                     </Box>
                 )
             }
