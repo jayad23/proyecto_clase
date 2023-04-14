@@ -40,7 +40,7 @@ const Favorites = () => {
               <Box
                 component="section"
                 sx={{
-                  width: "350px",
+                  width: "70%",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between"

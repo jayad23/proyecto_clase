@@ -23,8 +23,7 @@ const Login = () => {
         }
     }
 
-    const handleLoginInGmail = async (e) => {
-        e.preventDefault();
+    const handleLoginInGmail = async () => {
         try {
             const result = await onSingInGmail();
             dispatch({ type: "LOGGIN", payload: { email: result.user.email, token: result?.user?.accessToken } });
