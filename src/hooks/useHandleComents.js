@@ -54,7 +54,11 @@ export const useHandleComments = (initialValues) => {
     };
     setComments(values);
     try {
-      updateById({ url: "users", id: user.login, values: { ...user, values } });
+      updateById({
+        url: "users",
+        id: user.login.toLowerCase(),
+        values: { ...user, values },
+      });
     } catch (error) {
       console.log("err", error);
     }
@@ -77,7 +81,11 @@ export const useHandleComments = (initialValues) => {
     };
     setComments(values);
     try {
-      updateById({ url: "users", id: user.login, values: { ...user, values } });
+      updateById({
+        url: "users",
+        id: user.login.toLowerCase(),
+        values: { ...user, values },
+      });
       setEdit({ flag: false, id: null });
     } catch (error) {
       console.log("err", error);
@@ -101,7 +109,11 @@ export const useHandleComments = (initialValues) => {
     };
     setComments(values);
     try {
-      updateById({ url: "users", id: user.login, values: { ...user, values } });
+      updateById({
+        url: "users",
+        id: user.login.toLowerCase(),
+        values: { ...user, values },
+      });
     } catch (error) {
       console.log("err", error);
     }

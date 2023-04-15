@@ -118,7 +118,7 @@ const FavoritesStore = ({ user }) => {
                         {com.liked}
                       </Box>
                     )}
-                    <IconButton disabled={com.likedBy.some(element => element === inLoggin)} onClick={() => handleLikeComment(com.id, user)} >
+                    <IconButton disabled={com.likedBy.some(element => element === inLoggin)} onClick={() => handleLikeComment(com.id.toLowerCase(), user)} >
                       {com.liked > 0 ? <ThumbUpOffAltRoundedIcon sx={{ fontSize: "12px" }} /> : <ThumbUpOffAltOutlinedIcon sx={{ fontSize: "12px" }} />}
                     </IconButton>
                   </Box>
