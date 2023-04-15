@@ -47,7 +47,7 @@ const Layout = () => {
           </IconButton>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <Typography variant="body2">{state.user}</Typography>
+          <Typography variant="body2" sx={{ display: { xs: "none", md: "block" } }}>{state.user}</Typography>
           <Box>
             <Tooltip title="Cerrar sesión">
               <IconButton onClick={() => handleLogOut()}>
