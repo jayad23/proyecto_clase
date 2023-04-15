@@ -1,9 +1,10 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from "react-router-dom";
 import { NewContext } from '../context/Context';
-import { Box, Button, CardMedia, IconButton, TextField, Tooltip } from '@mui/material';
+import { Box, Button, CardMedia, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import { onSignIn, onSingInGmail } from '../api/firebaseMethods';
+import { blue } from '@mui/material/colors';
 
 const Login = () => {
     const [values, setValues] = useState({ email: "", password: "" });
@@ -44,7 +45,7 @@ const Login = () => {
     return (
         <Box component="div"
             sx={{
-                width: "20vw",
+                width: "300px",
                 border: "1px solid grey",
                 p: 2,
                 borderRadius: "5px",
@@ -92,12 +93,20 @@ const Login = () => {
                 <Button type='submit' size="small" variant="contained">
                     {isLoggin}
                 </Button>
-                <Box>
-                    <Tooltip title="Ingresa con tu cuenta Gmail">
-                        <IconButton onClick={handleLoginInGmail}>
-                            <GoogleIcon />
-                        </IconButton>
-                    </Tooltip>
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        cursor: "pointer",
+                        justifyContent: "center",
+                        gap: "5px"
+                    }}
+                    onClick={handleLoginInGmail}
+                >
+                    <GoogleIcon sx={{ fontSize: "18px", color: blue[400] }} />
+                    <Typography>
+                        Ingresa con tu cuenta Gmail
+                    </Typography>
                 </Box>
             </Box>
         </Box>
