@@ -56,7 +56,7 @@ const UserSelected = () => {
                         >
                             <Typography variant="body1">Likes: {data.followers}</Typography>
                             <Box component="div">
-                                <IconButton onClick={() => handleAddInFavorites(login, data)}>
+                                <IconButton onClick={() => handleAddInFavorites(data.login, data)}>
                                     {isAddedIn ? <FavoriteRoundedIcon /> : <FavoriteBorderIcon />}
                                 </IconButton>
                             </Box>

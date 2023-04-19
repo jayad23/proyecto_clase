@@ -56,7 +56,8 @@ export const useHandleComments = (initialValues) => {
     try {
       updateById({
         url: "users",
-        id: user.login.toLowerCase(),
+        //id: user.login.toLowerCase(),
+        id: user.login,
         values: { ...user, values },
       });
     } catch (error) {
@@ -83,7 +84,8 @@ export const useHandleComments = (initialValues) => {
     try {
       updateById({
         url: "users",
-        id: user.login.toLowerCase(),
+        //id: user.login.toLowerCase(),
+        id: user.login,
         values: { ...user, values },
       });
       setEdit({ flag: false, id: null });
@@ -111,7 +113,8 @@ export const useHandleComments = (initialValues) => {
     try {
       updateById({
         url: "users",
-        id: user.login.toLowerCase(),
+        //id: user.login.toLowerCase(),
+        id: user.login,
         values: { ...user, values },
       });
     } catch (error) {
