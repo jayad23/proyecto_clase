@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from "react-router-dom";
 import { NewContext } from '../context/Context';
-import { Box, Button, CardMedia, IconButton, TextField, Tooltip, Typography } from '@mui/material';
+import { Box, Button, CardMedia, IconButton, Stack, TextField, Tooltip, Typography } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import { onSignIn, onSingInGmail } from '../api/firebaseMethods';
 import { blue } from '@mui/material/colors';
@@ -43,71 +43,79 @@ const Login = () => {
     }
 
     return (
-        <Box component="div"
+        <Box
             sx={{
-                width: "300px",
-                border: "1px solid grey",
-                p: 2,
-                borderRadius: "5px",
-                position: "absolute",
-                left: "50%",
-                top: "50%",
-                transform: "translate(-50%, -50%)"
+                width: "100%",
+                minHeight: "100%",
+                position: "fixed",
+                backgroundImage: 'url(https://cutewallpaper.org/28/cyberpunk-gif-wallpaper/cyberpunk-pixel-wallpapers-top-free-cyberpunk-pixel-backgrounds--wallpaperaccess.gif)',
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
             }}
-
         >
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <CardMedia
-                    component="img"
-                    image="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-                    sx={{ width: "100px" }}
-                />
-            </Box>
-            <Box
-                component="form"
+            <Box component="div"
                 sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "20px",
+                    width: { xs: "80%", sm: "350px" },
+                    border: "1px solid grey",
+                    p: 2,
+                    borderRadius: "5px",
+                    position: "absolute",
+                    left: "50%",
+                    top: "50%",
+                    transform: "translate(-50%, -50%)",
+                    background: "white"
                 }}
-                onSubmit={handleSubmit}
+
             >
-                <TextField
-                    name='email'
-                    size='small'
-                    type="text"
-                    label="E-mail"
-                    placeholder='Ingrese su e-mail'
-                    value={values.email}
-                    onChange={(e) => setValues({ ...values, email: e.target.value })}
-                />
-                <TextField
-                    name='password'
-                    size='small'
-                    type="password"
-                    label="password"
-                    placeholder='Ingrese su contraseña'
-                    value={values.password}
-                    onChange={(e) => setValues({ ...values, password: e.target.value })}
-                />
-                <Button type='submit' size="small" variant="contained">
-                    {isLoggin}
-                </Button>
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        cursor: "pointer",
-                        justifyContent: "center",
-                        gap: "5px"
-                    }}
-                    onClick={handleLoginInGmail}
-                >
-                    <GoogleIcon sx={{ fontSize: "18px", color: blue[400] }} />
-                    <Typography>
-                        Ingresa con tu cuenta Gmail
-                    </Typography>
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <CardMedia
+                        component="img"
+                        image="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                        sx={{ width: "100px" }}
+                    />
                 </Box>
+                <Stack
+                    component="form"
+                    spacing={2}
+                    onSubmit={handleSubmit}
+                >
+                    <TextField
+                        name='email'
+                        size='small'
+                        type="text"
+                        label="E-mail"
+                        placeholder='Ingrese su e-mail'
+                        value={values.email}
+                        onChange={(e) => setValues({ ...values, email: e.target.value })}
+                    />
+                    <TextField
+                        name='password'
+                        size='small'
+                        type="password"
+                        label="password"
+                        placeholder='Ingrese su contraseña'
+                        value={values.password}
+                        onChange={(e) => setValues({ ...values, password: e.target.value })}
+                    />
+                    <Button type='submit' size="small" variant="contained">
+                        {isLoggin}
+                    </Button>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            cursor: "pointer",
+                            justifyContent: "center",
+                            gap: "5px"
+                        }}
+                        onClick={handleLoginInGmail}
+                    >
+                        <GoogleIcon sx={{ fontSize: "18px", color: blue[400] }} />
+                        <Typography>
+                            Ingresa con tu cuenta Gmail
+                        </Typography>
+                    </Box>
+                </Stack>
             </Box>
         </Box>
     )

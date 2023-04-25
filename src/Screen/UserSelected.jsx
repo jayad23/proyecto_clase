@@ -1,19 +1,17 @@
 import React, { useState, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { endpoint } from "./Home";
-import { useFetch } from "../hooks/useFetch";
-import { Box, Button, CardMedia, IconButton, TextareaAutosize, Typography } from "@mui/material";
+import { Box, CardMedia, IconButton, Typography } from "@mui/material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import SendIcon from '@mui/icons-material/Send';
-import EditIcon from '@mui/icons-material/Edit';
 import { addNewUser } from "../api/firebaseMethods";
-import { useHandleComments } from "../hooks/useHandleComents";
+import { useQuery } from "react-query";
+import { getElementById } from "../api/api";
+
 
 const UserSelected = () => {
     const { login } = useParams();
-    const [data] = useFetch(`${endpoint}/${login}`);
+    const { data } = useQuery({ queryKey: `${login}_selected`, queryFn: () => getElementById(login) });
     const [isAddedIn, setIsAddedIn] = useState(false);
 
     const handleAddInFavorites = (title, values) => {
@@ -25,6 +23,8 @@ const UserSelected = () => {
             setIsAddedIn(false);
         }
     };
+
+    const values = data && data.data;
 
     return (
         <Fragment>
@@ -42,10 +42,10 @@ const UserSelected = () => {
                             transform: "translate(-50%, -50%)"
                         }}
                     >
-                        <Typography variant="h5">Selected User: {login}</Typography>
+                        <Typography variant="h5">Selected User: {values?.login}</Typography>
                         <CardMedia
                             component="img"
-                            image={data?.avatar_url}
+                            image={values?.avatar_url}
                         />
                         <Box component="div"
                             sx={{
@@ -54,9 +54,9 @@ const UserSelected = () => {
                                 justifyContent: "space-between"
                             }}
                         >
-                            <Typography variant="body1">Likes: {data.followers}</Typography>
+                            <Typography variant="body1">Likes: {values.followers}</Typography>
                             <Box component="div">
-                                <IconButton onClick={() => handleAddInFavorites(data.login, data)}>
+                                <IconButton onClick={() => handleAddInFavorites(values.login, values)}>
                                     {isAddedIn ? <FavoriteRoundedIcon /> : <FavoriteBorderIcon />}
                                 </IconButton>
                             </Box>

@@ -5,13 +5,14 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded';
 import SearchIcon from '@mui/icons-material/Search';
 import { DesktopDrawer, MobileDrawer } from './Drawer';
-import { onSignOut } from '../../api/firebaseMethods';
 import "./style.css";
+import { useLogout } from '../../hooks/useLogout';
 
 const Layout = () => {
   const [userName, setUserName] = useState("");
-  const { state, dispatch } = useContext(NewContext);
+  const { state } = useContext(NewContext);
   const navigate = useNavigate();
+  const { handleLogOut } = useLogout();
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -20,18 +21,9 @@ const Layout = () => {
     }
   };
 
-  const handleLogOut = async () => {
-    try {
-      await onSignOut();
-      dispatch({ type: "LOGOUT" })
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <Fragment>
-      <Box component="header" style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid grey" }}>
+      <Box component="header" style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid grey", alignItems: "center", padding: "10px" }}>
         <DesktopDrawer />
         <MobileDrawer />
         <Box component="form" onSubmit={handleSearch}>
@@ -46,8 +38,8 @@ const Layout = () => {
             <SearchIcon />
           </IconButton>
         </Box>
-        <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <Typography variant="body2" sx={{ display: { xs: "none", md: "block" } }}>{state.user}</Typography>
+        <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", gap: "10px" }}>
+          <Typography variant="body2">{state.user}</Typography>
           <Box>
             <Tooltip title="Cerrar sesión">
               <IconButton onClick={() => handleLogOut()}>

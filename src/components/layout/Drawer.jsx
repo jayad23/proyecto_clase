@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import { Box, IconButton } from '@mui/material'
+import { Box, Button, Divider, IconButton } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import ListRoundedIcon from '@mui/icons-material/ListRounded';
+import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded';
+import { useLogout } from '../../hooks/useLogout';
 
 export const DesktopDrawer = () => {
   return (
@@ -15,7 +17,7 @@ export const DesktopDrawer = () => {
 
 export const MobileDrawer = () => {
   const [showMenu, setShowMenu] = useState(false);
-
+  const { handleLogOut } = useLogout();
   return (
     <Box component="div" sx={{ display: { xs: "block", sm: "none" } }}>
       <IconButton onClick={() => setShowMenu(!showMenu)}>
@@ -37,6 +39,14 @@ export const MobileDrawer = () => {
               <NavLink to="/favoritos">Favoritos</NavLink>
               <NavLink to="/favoritos-in-store">Favs in FB</NavLink>
               <NavLink to="/home">Home</NavLink>
+              <Divider />
+              <Button
+                endIcon={<ExitToAppRoundedIcon />}
+                size='small'
+                onClick={handleLogOut}
+              >
+                Cerrar
+              </Button>
             </Box>
           </Box>
         )
